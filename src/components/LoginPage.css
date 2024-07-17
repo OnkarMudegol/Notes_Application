@@ -1,77 +1,93 @@
-/* src/components/LoginPage.css */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .login-card {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-.login-card h1 {
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 24px;
+.left-section, .right-section {
+  padding: 40px;
+  width: 50%;
+}
+
+.left-section {
+  background-color: #ffffff;
+}
+
+.right-section {
+  background-color: #f9f9f9;
+}
+
+.right-section .logo {
+  width: 150px;
+  margin-top: 75px;
+  margin-left: 8px;
+  margin-bottom: 30px;
+}
+
+.illustration {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+p {
+  color: #666;
+  margin-bottom: 20px;
 }
 
 .input-group {
-    position: relative;
-    margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-bottom: 2px solid #ddd;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.input-group label {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    font-size: 16px;
-    color: #999;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.input-group input:focus,
-.input-group.focused input {
-    border-bottom-color: #667eea;
-}
-
-.input-group input:focus+label,
-.input-group.focused label {
-    top: -20px;
-    font-size: 12px;
-    color: #667eea;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .login-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #667eea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px;
 }
 
-.login-button:hover {
-    background-color: #5a67d8;
+.toggle-auth {
+  text-align: center;
+  color: #4CAF50;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    flex-direction: column;
+  }
+  
+  .left-section, .right-section {
+    width: 100%;
+  }
 }

@@ -8,7 +8,6 @@ function LoginPage({ setLoading }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
-  const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -34,37 +33,40 @@ function LoginPage({ setLoading }) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>{isLogin ? 'Login' : 'Register'}</h1>
-        <form onSubmit={handleSubmit}>
-          <div className={`input-group ${isFocused || username ? 'focused' : ''}`}>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              required
-            />
-            <label>Username</label>
-          </div>
-          <div className={`input-group ${isFocused || password ? 'focused' : ''}`}>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              required
-            />
-            <label>Password</label>
-          </div>
-          <button type="submit" className="login-button">
-            {isLogin ? 'Login' : 'Register'}
-          </button>
-        </form>
-        <p onClick={() => setIsLogin(!isLogin)} style={{ cursor: 'pointer', marginTop: '10px' }}>
-          {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
-        </p>
+        <div className="left-section">
+          <img src="Man.jpg" alt="Man working on laptop" className="illustration" />
+          <h1>Keep life simple</h1>
+          <p>Store all your notes in a simple and intuitive app that helps you enjoy what is most important in life.</p>
+        </div>
+        <div className="right-section">
+          <img src="Logo.png" alt="Notes.me" className="logo" />
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div className="input-group">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+            </div>
+            <button type="submit" className="login-button">
+              {isLogin ? 'Login' : 'Register'}
+            </button>
+          </form>
+          <p onClick={() => setIsLogin(!isLogin)} className="toggle-auth">
+            {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
+          </p>
+        </div>
       </div>
     </div>
   );

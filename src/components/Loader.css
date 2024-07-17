@@ -8,82 +8,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
   z-index: 9999;
 }
 
-.loader {
-  position: relative;
-  margin: 0 auto;
-  width: 100px;
+.loader-content {
+  text-align: center;
 }
 
-.loader:before {
-  content: '';
-  display: block;
-  padding-top: 100%;
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.circular {
-  animation: rotate 2s linear infinite;
+.pencil-icon {
+  margin-right: 10px;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 4px;
+  background-color: #f0f0f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 60%;
   height: 100%;
-  transform-origin: center center;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  background-color: #333;
+  animation: loading 2s infinite;
 }
 
-.path {
-  stroke-dasharray: 1, 200;
-  stroke-dashoffset: 0;
-  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-  stroke-linecap: round;
-}
-
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes dash {
+@keyframes loading {
   0% {
-    stroke-dasharray: 1, 200;
-    stroke-dashoffset: 0;
+    width: 0;
   }
-
   50% {
-    stroke-dasharray: 89, 200;
-    stroke-dashoffset: -35px;
+    width: 60%;
   }
-
   100% {
-    stroke-dasharray: 89, 200;
-    stroke-dashoffset: -124px;
-  }
-}
-
-@keyframes color {
-
-  100%,
-  0% {
-    stroke: #667eea;
-  }
-
-  40% {
-    stroke: #764ba2;
-  }
-
-  66% {
-    stroke: #6B8DD6;
-  }
-
-  80%,
-  90% {
-    stroke: #8E37D7;
+    width: 100%;
   }
 }

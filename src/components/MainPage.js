@@ -1,184 +1,177 @@
-// src/components/MainPage.js
+// MainPage.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Note from "./Note";
 import "./MainPage.css";
 
 function MainPage({ logout }) {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("date");
-  const username = localStorage.getItem("username") || "User";
-  const MAX_CHARS = 200;
+  const [newNote, setNewNote] = useState("");
+  const [showNewNote, setShowNewNote] = useState(false);
+  const [editingNoteId, setEditingNoteId] = useState(null);
+  const username = localStorage.getItem("username") || "Nitesh";
 
   useEffect(() => {
     fetchNotes();
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setDarkMode(savedTheme === "dark");
   }, []);
 
   const fetchNotes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://notesme-backend.onrender.com/api/notes", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://notesme-backend.onrender.com/api/notes",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setNotes(response.data);
     } catch (error) {
       console.error("Error fetching notes:", error);
     }
   };
 
-  const getRandomColor = () => {
-    const colors = [
-      { background: "#FFD700", text: "#000000" },
-      { background: "#98FB98", text: "#000000" },
-      { background: "#FFA07A", text: "#000000" },
-      { background: "#87CEFA", text: "#000000" },
-      { background: "#DDA0DD", text: "#000000" },
-      { background: "#F0E68C", text: "#000000" },
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   const addNote = async () => {
-    if (newNote.trim() && newNote.length <= MAX_CHARS) {
+    if (newNote.trim()) {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
           "https://notesme-backend.onrender.com/api/notes",
-          {
-            text: newNote,
-            color: getRandomColor(),
-          },
+          { text: newNote },
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setNotes([...notes, response.data]);
+        setNotes([response.data, ...notes]);
         setNewNote("");
+        setShowNewNote(false);
       } catch (error) {
         console.error("Error adding note:", error);
       }
     }
   };
 
+  const updateNote = async (id, text) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `https://notesme-backend.onrender.com/api/notes/${id}`,
+        { text },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setNotes(notes.map(note => note._id === id ? response.data : note));
+      setEditingNoteId(null);
+    } catch (error) {
+      console.error("Error updating note:", error);
+    }
+  };
+
   const deleteNote = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`https://notesme-backend.onrender.com/api/notes/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setNotes(notes.filter((note) => note._id !== id));
+      await axios.delete(
+        `https://notesme-backend.onrender.com/api/notes/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setNotes(notes.filter(note => note._id !== id));
     } catch (error) {
       console.error("Error deleting note:", error);
     }
   };
 
-  const editNote = async (id, newText) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.put(
-        `https://notesme-backend.onrender.com/api/notes/${id}`,
-        { text: newText },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setNotes(notes.map((note) => (note._id === id ? response.data : note)));
-    } catch (error) {
-      console.error("Error editing note:", error);
-    }
+  const handleHome = () => {
+    setSearchTerm("");
+    setShowNewNote(false);
   };
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    localStorage.setItem("theme", darkMode ? "light" : "dark");
+  const handleNewNote = () => {
+    setShowNewNote(true);
   };
-
-  const sortedNotes = [...notes].sort((a, b) => {
-    if (sortBy === "date") {
-      return new Date(b.date) - new Date(a.date);
-    } else {
-      return a.text.localeCompare(b.text);
-    }
-  });
 
   return (
-    <div className={`main-container ${darkMode ? "dark" : "light"}`}>
+    <div className="main-container">
       <aside className="sidebar">
-        <div className="logo">📝</div>
+        <div className="logo">✏️</div>
         <nav className="menu">
-          <button className="menu-item active" title="Home">
+          <button className="menu-item" title="Home" onClick={handleHome}>
             🏠
           </button>
-          <button className="menu-item" title="Add Note">
+          <button className="menu-item" title="New Note" onClick={handleNewNote}>
             ➕
           </button>
-          <button className="menu-item" title="Settings">
-            ⚙️
-          </button>
-          <button className="menu-item" onClick={logout} title="Logout">
+          <button className="menu-item" title="Logout" onClick={logout}>
             🚪
           </button>
         </nav>
-        <button
-          className="theme-switch"
-          onClick={toggleTheme}
-          title="Toggle Theme"
-        >
-          {darkMode ? "🌞" : "🌙"}
-        </button>
       </aside>
       <main className="content">
         <header className="header">
-          <h1>
-            Welcome back, <span>{username}</span> 👋
-          </h1>
+          <h1>Hello, {username}! 👋</h1>
         </header>
         <div className="search-sort-container">
           <input
             type="text"
-            placeholder="Search notes..."
+            placeholder="🔍 Search Notes"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="date">Sort by Date</option>
-            <option value="alphabetical">Sort Alphabetically</option>
-          </select>
         </div>
+        <p className="notes-intro">All your notes are here, in one place!</p>
         <div className="notes-grid">
-          <div className="note new-note">
-            <textarea
-              placeholder="Type to add a new note..."
-              value={newNote}
-              onChange={(e) => setNewNote(e.target.value.slice(0, MAX_CHARS))}
-            ></textarea>
-            <div className="note-footer">
-              <small>{MAX_CHARS - newNote.length} characters remaining</small>
-              <button
-                onClick={addNote}
-                disabled={newNote.length === 0 || newNote.length > MAX_CHARS}
-              >
-                Add Note
-              </button>
+          {showNewNote && (
+            <div className="note new-note">
+              <textarea
+                placeholder="Type your note..."
+                value={newNote}
+                onChange={(e) => setNewNote(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    addNote();
+                  }
+                }}
+              ></textarea>
+              <div className="note-footer">
+                <span>{formatDate(new Date().toISOString())}</span>
+                <button onClick={addNote}>Add Note</button>
+              </div>
             </div>
-          </div>
-          {sortedNotes
-            .filter((note) =>
-              note.text.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((note) => (
-              <Note
-                key={note._id}
-                note={note}
-                onDelete={() => deleteNote(note._id)}
-                onEdit={(newText) => editNote(note._id, newText)}
-              />
-            ))}
+          )}
+          {notes
+  .filter((note) =>
+    note.text.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+  .map((note) => (
+    <div key={note._id} className="note">
+      {editingNoteId === note._id ? (
+        <textarea
+          value={note.text}
+          onChange={(e) => setNotes(notes.map(n => n._id === note._id ? {...n, text: e.target.value} : n))}
+          onBlur={() => updateNote(note._id, note.text)}
+        ></textarea>
+      ) : (
+        <div className="note-content" onClick={() => setEditingNoteId(note._id)}>
+          {note.text}
+        </div>
+      )}
+      <div className="note-footer">
+        <span className="note-date">{formatDate(note.date)}</span>
+        <div className="note-actions">
+          <button onClick={() => setEditingNoteId(note._id)} className="edit-btn">✏️</button>
+          <button onClick={() => deleteNote(note._id)} className="delete-btn">🗑️</button>
+        </div>
+      </div>
+    </div>
+  ))}
         </div>
       </main>
     </div>

@@ -5,10 +5,13 @@ import './Loader.css';
 function Loader() {
   return (
     <div className="loader-overlay">
-      <div className="loader">
-        <svg className="circular" viewBox="25 25 50 50">
-          <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
-        </svg>
+      <div className="loader-content">
+        <h1 className="logo">
+          <span className="pencil-icon">✏️</span> NOTE.me
+        </h1>
+        <div className="progress-bar">
+          <div className="progress"></div>
+        </div>
       </div>
     </div>
   );
