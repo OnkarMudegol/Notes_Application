@@ -49,13 +49,13 @@ function MainPage({ logout }) {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setNotes([response.data, ...notes]);
+        console.log('Note added:', response.data); // Add this line for debugging
+        setNotes(prevNotes => [response.data, ...prevNotes]);
         setNewNote("");
         setShowNewNote(false);
       } catch (error) {
-        console.error("Error adding note:", error);
-        // Add more detailed error logging here
-        console.error("Error response:", error.response);
+        console.error("Error adding note:", error.response?.data || error.message);
+        alert("Failed to add note. Please try again.");
       }
     }
   };
