@@ -8,23 +8,25 @@ function LoginPage({ setLoading }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
       const response = await axios.post(`https://takenotes123backend.onrender.com${endpoint}`, { username, password });
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('username', username);
         navigate('/main');
       } else {
-        alert(response.data.message);
+        setError(response.data.message || 'An unexpected error occurred');
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'An error occurred');
+      setError(error.response?.data?.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -59,6 +61,7 @@ function LoginPage({ setLoading }) {
                 required
               />
             </div>
+            {error && <div className="error-message">{error}</div>}
             <button type="submit" className="login-button">
               {isLogin ? 'Login' : 'Register'}
             </button>

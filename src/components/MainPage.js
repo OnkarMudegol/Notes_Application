@@ -1,5 +1,7 @@
 // MainPage.js
 
+// MainPage.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./MainPage.css";
@@ -52,6 +54,8 @@ function MainPage({ logout }) {
         setShowNewNote(false);
       } catch (error) {
         console.error("Error adding note:", error);
+        // Add more detailed error logging here
+        console.error("Error response:", error.response);
       }
     }
   };
