@@ -13,9 +13,15 @@ function MainPage({ logout }) {
   const [showNewNote, setShowNewNote] = useState(false);
   const [editingNoteId, setEditingNoteId] = useState(null);
   const username = localStorage.getItem("username") || "Nitesh";
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
 
   useEffect(() => {
     fetchNotes();
+    // Check if dark mode preference is stored in localStorage
+    const storedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(storedDarkMode);
+    applyTheme(storedDarkMode);
   }, []);
 
   const fetchNotes = async () => {
@@ -100,6 +106,15 @@ function MainPage({ logout }) {
   const handleNewNote = () => {
     setShowNewNote(true);
   };
+  const toggleTheme = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    applyTheme(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode);
+  };
+  const applyTheme = (darkMode) => {
+    document.body.classList.toggle('dark-mode', darkMode);
+  };
 
   return (
     <div className="main-container">
@@ -112,14 +127,22 @@ function MainPage({ logout }) {
           <button className="menu-item" title="New Note" onClick={handleNewNote}>
             ➕
           </button>
-          <button className="menu-item" title="Logout" onClick={logout}>
+          <button className="menu-item" title="Logout" onClick={logout} style={{ marginTop: '200px'}}>
             🚪
           </button>
         </nav>
       </aside>
       <main className="content">
         <header className="header">
-          <h1>Hello, {username}! 👋</h1>
+          <h1>Hello, {username}! 👋 </h1>
+          <label className="switch">
+            <input 
+              type="checkbox" 
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
         </header>
         <div className="search-sort-container">
           <input
