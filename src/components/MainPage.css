@@ -411,3 +411,6 @@ body.dark-mode .search-sort-container input {
 body.dark-mode .notes-intro {
     color: #bbb;
 }
+body.dark-mode .header h1 {
+    color: white;
+}
