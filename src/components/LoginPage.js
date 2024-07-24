@@ -37,11 +37,10 @@ function LoginPage({ setLoading }) {
       <div className="login-card">
         <div className="left-section">
           <img src="Man.jpg" alt="Man working on laptop" className="illustration" />
-          <h1>Keep life simple</h1>
-          <p>Store all your notes in a simple and intuitive app that helps you enjoy what is most important in life.</p>
+          <h1>takenotes123</h1>
+          <p>Organise your life in 1 2 3!!</p>
         </div>
         <div className="right-section">
-          <img src="Logo.png" alt="Notes.me" className="logo" />
           <form onSubmit={handleSubmit}>
             <div className="input-group">
               <input

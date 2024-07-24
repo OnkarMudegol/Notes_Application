@@ -9,7 +9,7 @@
 .login-card {
   display: flex;
   width: 100%;
-  max-width: 800px;
+  max-width: 750px;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
@@ -29,11 +29,8 @@
   background-color: #f9f9f9;
 }
 
-.right-section .logo {
-  width: 150px;
-  margin-top: 75px;
-  margin-left: 8px;
-  margin-bottom: 30px;
+.right-section form{
+  margin-top: 100px;
 }
 
 .illustration {
@@ -74,6 +71,7 @@ p {
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 15px;
+  margin-left: 10px;
 }
 
 .toggle-auth {
