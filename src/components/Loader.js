@@ -7,11 +7,8 @@ function Loader() {
     <div className="loader-overlay">
       <div className="loader-content">
         <h1 className="logo">
-          <span className="pencil-icon">✏️</span> NOTE.me
+          takenotes in 123!
         </h1>
-        <div className="progress-bar">
-          <div className="progress"></div>
-        </div>
       </div>
     </div>
   );
