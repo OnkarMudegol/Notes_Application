@@ -119,16 +119,16 @@ function MainPage({ logout }) {
   return (
     <div className="main-container">
       <aside className="sidebar">
-        <div className="logo">✏️</div>
+        <div className="logo"><img src="Hand-Writing.jpg"></img></div>
         <nav className="menu">
-          <button className="menu-item" title="Home" onClick={handleHome}>
-            🏠
+          <button className="menu-item" title="Home" onClick={handleHome} style={{fontSize: '40px'}}>
+            ⌂
           </button>
-          <button className="menu-item" title="New Note" onClick={handleNewNote}>
-            ➕
+          <button className="menu-item" title="New Note" onClick={handleNewNote} style={{fontSize: '40px'}}>
+            +
           </button>
-          <button className="menu-item" title="Logout" onClick={logout} style={{ marginTop: '200px'}}>
-            🚪
+          <button className="menu-item" title="Logout" onClick={logout} style={{ marginTop: '100px'}}>
+          ◀
           </button>
         </nav>
       </aside>

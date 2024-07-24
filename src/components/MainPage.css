@@ -43,6 +43,10 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.logo img {
+    margin-top: 28px;
+    width: 70px;
+}
 .menu {
     display: flex;
     flex-direction: column;
@@ -58,7 +62,7 @@ body {
     cursor: pointer;
     transition: var(--transition);
     padding: 10px;
-    border-radius: 50%;
+    border-radius: 30%;
 }
 
 .menu-item:hover {
