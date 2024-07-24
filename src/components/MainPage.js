@@ -119,7 +119,7 @@ function MainPage({ logout }) {
   return (
     <div className="main-container">
       <aside className="sidebar">
-        <div className="logo"><img src="Hand-Writing.jpg"></img></div>
+        <div className="logo"><img src="Hand-Writing.jpg" alt="Hand Writing"></img></div>
         <nav className="menu">
           <button className="menu-item" title="Home" onClick={handleHome} style={{fontSize: '40px'}}>
             ⌂
